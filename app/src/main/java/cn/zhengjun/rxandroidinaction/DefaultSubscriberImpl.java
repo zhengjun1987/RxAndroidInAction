@@ -1,6 +1,7 @@
 package cn.zhengjun.rxandroidinaction;
 
-import io.reactivex.observers.DefaultObserver;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Author  : Zheng Jun
@@ -9,17 +10,30 @@ import io.reactivex.observers.DefaultObserver;
  * Summary : 在这里描述Class的主要功能
  */
 
-public class DefaultSubscriberImpl<T> extends DefaultObserver<T> {
+public class DefaultSubscriberImpl<T> implements Observer<T> {
     private String tag;
+    private Disposable disposable;
 
     public DefaultSubscriberImpl(String tag) {
         this.tag = tag;
     }
 
-    @Override
+    public void dispose() {
+        disposable.dispose();
+    }
+
+    public boolean isDisposed() {
+        return disposable.isDisposed();
+    }
+
     protected void onStart() {
-        super.onStart();
         LogUtils.print(tag + ".onStart");
+    }
+
+    @Override
+    public void onSubscribe(Disposable disposable) {
+        this.disposable = disposable;
+        this.onStart();
     }
 
     @Override
