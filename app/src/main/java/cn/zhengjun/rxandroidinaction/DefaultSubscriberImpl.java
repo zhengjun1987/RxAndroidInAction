@@ -2,6 +2,7 @@ package cn.zhengjun.rxandroidinaction;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.internal.disposables.DisposableHelper;
 
 /**
  * Author  : Zheng Jun
@@ -19,6 +20,8 @@ public class DefaultSubscriberImpl<T> implements Observer<T> {
     }
 
     public void dispose() {
+        Disposable disposable = this.disposable;
+        this.disposable = DisposableHelper.DISPOSED;
         disposable.dispose();
     }
 
