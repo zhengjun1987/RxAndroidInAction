@@ -47,6 +47,7 @@ public class DefaultSubscriberImpl<T> implements Observer<T> {
     @Override
     public void onError(Throwable throwable) {
         LogUtils.print(tag + ".onError  " + "throwable = [" + throwable + "]");
+        throwable.printStackTrace();
     }
 
     @Override
